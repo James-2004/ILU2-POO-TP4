@@ -27,8 +27,35 @@ public class Scenario {
 
 			@Override
 			public DepenseMarchand[] acheterProduit(String produit, int quantiteSouhaitee) {
-				DepenseMarchand[] depense;
-				
+			    DepenseMarchand[] depenses = new DepenseMarchand[marche.length];
+			    int nbDepenses = 0;
+			    for (int i = 0; i < nbEtal; i++) {
+			        int quantiteVendue = marche[i].contientProduit(produit, quantiteSouhaitee);
+			        if (quantiteVendue > 0) {
+			            double prixTotal = marche[i].acheterProduit(quantiteVendue);
+			            depenses[nbDepenses] = new DepenseMarchand(marche[i].getVendeur(), quantiteVendue, produit, prixTotal);
+			            nbDepenses++;
+			            quantiteSouhaitee -= quantiteVendue;
+			        }
+			        if (quantiteSouhaitee <= 0) {
+			            // Arrête si la quantité souhaitée a été atteinte
+			            DepenseMarchand[] result = new DepenseMarchand[nbDepenses];
+			            System.arraycopy(depenses, 0, result, 0, nbDepenses);
+			            return result;
+			        }
+			    }
+			    DepenseMarchand[] result = new DepenseMarchand[nbDepenses];
+			    System.arraycopy(depenses, 0, result, 0, nbDepenses);
+			    return result;
+			}
+
+			@Override
+			public String toString() {
+			    StringBuilder result = new StringBuilder();
+			    for (int i = 0; i < nbEtal; i++) {
+			        result.append(marche[i].etatEtal()).append("\n");
+			    }
+			    return result.toString();
 			}
 			
 		};
