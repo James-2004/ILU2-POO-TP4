@@ -1,23 +1,15 @@
 package produit;
 
 public enum Unite {
-	LITRE, GRAMME, KILOGRAMME, CENTILITRE, MILILITRE, PAR_PIECE;
+	LITRE("l"), GRAMME("G"), KILOGRAMME("K"), CENTILITRE("C"), MILILITRE("M"), PAR_PIECE("P");
+	private final String unit ;
 	
+	Unite(String string) {
+		this.unit=string;
+	}
+
 	public String getUnit()
 	{
-		switch(this) {
-			case LITRE:
-				return "l";
-			case GRAMME:
-				return "g";
-			case KILOGRAMME:
-				return "kg";
-			case CENTILITRE:
-				return "cl";
-			case MILILITRE:
-				return "ml";
-			default:
-				return "pièces";
-		}
+		return unit;
 	}
 }
